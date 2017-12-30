@@ -12,7 +12,8 @@ public class Knight extends Piece {
 
   @Override
   public void movePiece(Position destination) {
-
+    this.position = destination;
+    this.hasMoved = true;
   }
 
   @Override

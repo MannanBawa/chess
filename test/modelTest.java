@@ -27,7 +27,7 @@ public class modelTest {
   }
 
   //PAWN TESTS
-  
+
   @Test
   public void pawnBlackSingleFirstMoveTest() {
     model.setupChessBoard();
@@ -184,6 +184,24 @@ public class modelTest {
   }
 
   @Test (expected = IllegalArgumentException.class)
+  public void pawnBlackReverseMoveFailTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackPawn1 = pieceHashMap.get("blackPawn1");
+    model.movePiece(blackPawn1, new Position(2, 0));
+    model.movePiece(blackPawn1, new Position(1, 0));
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void pawnWhiteReverseMoveFailTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece whitePawn1 = pieceHashMap.get("whitePawn1");
+    model.movePiece(whitePawn1, new Position(4, 0));
+    model.movePiece(whitePawn1, new Position(5, 0));
+  }
+
+  @Test (expected = IllegalArgumentException.class)
   public void pawnBlackDoubleSecondMoveFailTest() {
     model.setupChessBoard();
     HashMap<String, Piece> pieceHashMap = model.getPieceMap();
@@ -237,7 +255,7 @@ public class modelTest {
   }
 
   @Test (expected = IllegalArgumentException.class)
-  public void blackPawnBlockFailTest() {
+  public void pawnBlackBlockFailTest() {
     model.setupChessBoard();
     HashMap<String, Piece> pieceHashMap = model.getPieceMap();
     Piece whitePawn2 = pieceHashMap.get("whitePawn2");
@@ -250,7 +268,7 @@ public class modelTest {
   }
 
   @Test (expected = IllegalArgumentException.class)
-  public void whitePawnBlockFailTest() {
+  public void pawnWhiteBlockFailTest() {
     model.setupChessBoard();
     HashMap<String, Piece> pieceHashMap = model.getPieceMap();
     Piece whitePawn2 = pieceHashMap.get("whitePawn2");
@@ -265,7 +283,7 @@ public class modelTest {
   //ROOK TESTS
 
   @Test
-  public void blackRookMoveDownTest() {
+  public void rookBlackMoveDownTest() {
     model.setupChessBoard();
     HashMap<String, Piece> pieceHashMap = model.getPieceMap();
     Piece blackPawn1 = pieceHashMap.get("blackPawn1");
@@ -285,7 +303,7 @@ public class modelTest {
   }
 
   @Test
-  public void blackRookMoveUpTest() {
+  public void rookBlackMoveUpTest() {
     model.setupChessBoard();
     HashMap<String, Piece> pieceHashMap = model.getPieceMap();
     Piece blackPawn1 = pieceHashMap.get("blackPawn1");
@@ -306,7 +324,7 @@ public class modelTest {
   }
 
   @Test
-  public void blackRookMoveRightTest() {
+  public void rookBlackMoveRightTest() {
     model.setupChessBoard();
     HashMap<String, Piece> pieceHashMap = model.getPieceMap();
     Piece blackPawn1 = pieceHashMap.get("blackPawn1");
@@ -327,7 +345,7 @@ public class modelTest {
   }
 
   @Test
-  public void blackRookMoveLeftTest() {
+  public void rookBlackMoveLeftTest() {
     model.setupChessBoard();
     HashMap<String, Piece> pieceHashMap = model.getPieceMap();
     Piece blackPawn1 = pieceHashMap.get("blackPawn1");
@@ -349,7 +367,7 @@ public class modelTest {
   }
 
   @Test (expected = IllegalArgumentException.class)
-  public void blackRookMoveDownBlockedFailTest() {
+  public void rookBlackMoveDownBlockedFailTest() {
     model.setupChessBoard();
     HashMap<String, Piece> pieceHashMap = model.getPieceMap();
     Piece blackPawn1 = pieceHashMap.get("blackPawn1");
@@ -359,7 +377,7 @@ public class modelTest {
   }
 
   @Test (expected = IllegalArgumentException.class)
-  public void blackRookMoveUpBlockedFailTest() {
+  public void rookBlackMoveUpBlockedFailTest() {
     model.setupChessBoard();
     HashMap<String, Piece> pieceHashMap = model.getPieceMap();
     Piece blackPawn1 = pieceHashMap.get("blackPawn1");
@@ -373,7 +391,7 @@ public class modelTest {
   }
 
   @Test (expected = IllegalArgumentException.class)
-  public void blackRookMoveRightBlockedFailTest() {
+  public void rookBlackMoveRightBlockedFailTest() {
     model.setupChessBoard();
     HashMap<String, Piece> pieceHashMap = model.getPieceMap();
     Piece blackPawn1 = pieceHashMap.get("blackPawn1");
@@ -386,7 +404,7 @@ public class modelTest {
   }
 
   @Test (expected = IllegalArgumentException.class)
-  public void blackRookMoveLeftBlockedFailTest() {
+  public void rookBlackMoveLeftBlockedFailTest() {
     model.setupChessBoard();
     HashMap<String, Piece> pieceHashMap = model.getPieceMap();
     Piece blackPawn1 = pieceHashMap.get("blackPawn1");
@@ -400,7 +418,7 @@ public class modelTest {
   }
 
   @Test (expected = IllegalArgumentException.class)
-  public void blackRookMoveDiagonalFailTest() {
+  public void rookBlackMoveDiagonalFailTest() {
     model.setupChessBoard();
     HashMap<String, Piece> pieceHashMap = model.getPieceMap();
     Piece blackPawn1 = pieceHashMap.get("blackPawn1");
@@ -409,4 +427,449 @@ public class modelTest {
     model.movePiece(blackRook1, new Position(2,0));
     model.movePiece(blackRook1, new Position(3,1));
   }
+
+  //KNIGHT TESTS
+
+  @Test
+  public void knightBlackMoveDownRightTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackKnight1 = pieceHashMap.get("blackKnight1");
+    model.movePiece(blackKnight1, new Position(2, 2));
+    assertEquals("|♜|| ||♝||♛||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟||♟||♟||♟||♟||♟|\n" +
+                    "| || ||♞|| || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  public void knightBlackMoveDownLeftTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackKnight1 = pieceHashMap.get("blackKnight1");
+    model.movePiece(blackKnight1, new Position(2, 0));
+    assertEquals("|♜|| ||♝||♛||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟||♟||♟||♟||♟||♟|\n" +
+                    "|♞|| || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  public void knightBlackMoveRightDownTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackKnight1 = pieceHashMap.get("blackKnight1");
+    model.movePiece(blackKnight1, new Position(2, 2));
+    model.movePiece(blackKnight1, new Position(3, 4));
+    assertEquals("|♜|| ||♝||♛||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟||♟||♟||♟||♟||♟|\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || ||♞|| || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  public void knightBlackMoveLeftDownTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackKnight1 = pieceHashMap.get("blackKnight1");
+    model.movePiece(blackKnight1, new Position(2, 2));
+    model.movePiece(blackKnight1, new Position(3, 0));
+    assertEquals("|♜|| ||♝||♛||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟||♟||♟||♟||♟||♟|\n" +
+                    "| || || || || || || || |\n" +
+                    "|♞|| || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  public void knightWhiteMoveUpRightTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece whiteKnight2 = pieceHashMap.get("whiteKnight2");
+    model.movePiece(whiteKnight2, new Position(5, 7));
+    assertEquals("|♜||♞||♝||♛||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟||♟||♟||♟||♟||♟|\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || ||♘|\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗|| ||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  public void knightWhiteMoveUpLeftTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece whiteKnight2 = pieceHashMap.get("whiteKnight2");
+    model.movePiece(whiteKnight2, new Position(5, 5));
+    assertEquals("|♜||♞||♝||♛||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟||♟||♟||♟||♟||♟|\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || ||♘|| || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗|| ||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  public void knightWhiteMoveRightUpTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece whiteKnight2 = pieceHashMap.get("whiteKnight2");
+    model.movePiece(whiteKnight2, new Position(5, 5));
+    model.movePiece(whiteKnight2, new Position(4, 7));
+    assertEquals("|♜||♞||♝||♛||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟||♟||♟||♟||♟||♟|\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || ||♘|\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗|| ||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  public void knightWhiteMoveLeftUpTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece whiteKnight2 = pieceHashMap.get("whiteKnight2");
+    model.movePiece(whiteKnight2, new Position(5, 5));
+    model.movePiece(whiteKnight2, new Position(4, 3));
+    assertEquals("|♜||♞||♝||♛||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟||♟||♟||♟||♟||♟|\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || ||♘|| || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗|| ||♖|\n",
+            model.printBoard());
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void knightWhiteMoveUpFailTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece whiteKnight2 = pieceHashMap.get("whiteKnight2");
+    model.movePiece(whiteKnight2, new Position(5, 5));
+    model.movePiece(whiteKnight2, new Position(4, 3));
+    model.movePiece(whiteKnight2, new Position(3, 3));
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void knightWhiteMoveRightFailTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece whiteKnight2 = pieceHashMap.get("whiteKnight2");
+    model.movePiece(whiteKnight2, new Position(5, 5));
+    model.movePiece(whiteKnight2, new Position(4, 3));
+    model.movePiece(whiteKnight2, new Position(4, 7));
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void knightWhiteMoveLeftFailTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece whiteKnight2 = pieceHashMap.get("whiteKnight2");
+    model.movePiece(whiteKnight2, new Position(5, 5));
+    model.movePiece(whiteKnight2, new Position(4, 3));
+    model.movePiece(whiteKnight2, new Position(4, 0));
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void knightWhiteMoveDownFailTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece whiteKnight2 = pieceHashMap.get("whiteKnight2");
+    model.movePiece(whiteKnight2, new Position(5, 5));
+    model.movePiece(whiteKnight2, new Position(4, 3));
+    model.movePiece(whiteKnight2, new Position(5, 3));
+  }
+
+  //BISHOP TESTS
+
+  @Test
+  public void bishopBlackMoveDownRightTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackPawn4 = pieceHashMap.get("blackPawn4");
+    Piece blackBish1 = pieceHashMap.get("blackBish1");
+    model.movePiece(blackPawn4, new Position(2, 3));
+    model.movePiece(blackBish1, new Position(3, 5));
+    assertEquals("|♜||♞|| ||♛||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟|| ||♟||♟||♟||♟|\n" +
+                    "| || || ||♟|| || || || |\n" +
+                    "| || || || || ||♝|| || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  public void bishopBlackMoveDownLeftTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackPawn4 = pieceHashMap.get("blackPawn4");
+    Piece blackBish1 = pieceHashMap.get("blackBish1");
+    model.movePiece(blackPawn4, new Position(2, 3));
+    model.movePiece(blackBish1, new Position(2, 4));
+    model.movePiece(blackBish1, new Position(3, 3));
+    assertEquals("|♜||♞|| ||♛||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟|| ||♟||♟||♟||♟|\n" +
+                    "| || || ||♟|| || || || |\n" +
+                    "| || || ||♝|| || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  public void bishopBlackMoveUpLeftTest() {
+      model.setupChessBoard();
+      HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+      Piece blackPawn4 = pieceHashMap.get("blackPawn4");
+      Piece blackBish1 = pieceHashMap.get("blackBish1");
+      model.movePiece(blackPawn4, new Position(2, 3));
+      model.movePiece(blackBish1, new Position(2, 4));
+      model.movePiece(blackBish1, new Position(3, 3));
+      model.movePiece(blackBish1, new Position(2, 2));
+      assertEquals("|♜||♞|| ||♛||♚||♝||♞||♜|\n" +
+                      "|♟||♟||♟|| ||♟||♟||♟||♟|\n" +
+                      "| || ||♝||♟|| || || || |\n" +
+                      "| || || || || || || || |\n" +
+                      "| || || || || || || || |\n" +
+                      "| || || || || || || || |\n" +
+                      "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                      "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+              model.printBoard());
+    }
+
+  @Test
+  public void bishopBlackMoveUpRightTest() {
+      model.setupChessBoard();
+      HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+      Piece blackPawn4 = pieceHashMap.get("blackPawn4");
+      Piece blackBish1 = pieceHashMap.get("blackBish1");
+      model.movePiece(blackPawn4, new Position(2, 3));
+      model.movePiece(blackBish1, new Position(2, 4));
+      model.movePiece(blackBish1, new Position(3, 3));
+      model.movePiece(blackBish1, new Position(2, 2));
+      model.movePiece(blackBish1, new Position(1, 3));
+      assertEquals("|♜||♞|| ||♛||♚||♝||♞||♜|\n" +
+                      "|♟||♟||♟||♝||♟||♟||♟||♟|\n" +
+                      "| || || ||♟|| || || || |\n" +
+                      "| || || || || || || || |\n" +
+                      "| || || || || || || || |\n" +
+                      "| || || || || || || || |\n" +
+                      "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                      "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+              model.printBoard());
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void bishopBlackMoveDownRightBlockedFailTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackBish1 = pieceHashMap.get("blackBish1");
+    model.movePiece(blackBish1, new Position(2, 4));
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void bishopBlackMoveDownLeftBlockedFailTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackBish1 = pieceHashMap.get("blackBish1");
+    model.movePiece(blackBish1, new Position(2, 0));
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void bishopWhiteMoveUpRightBlockedFailTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece whiteBish2 = pieceHashMap.get("whiteBish2");
+    model.movePiece(whiteBish2, new Position(5, 7));
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void bishopWhiteMoveUpLeftBlockedFailTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece whiteBish2 = pieceHashMap.get("whiteBish2");
+    model.movePiece(whiteBish2, new Position(5, 3));
+  }
+
+  //QUEEN TESTS
+
+  @Test
+  public void queenMoveDownTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackPawn4 = pieceHashMap.get("blackPawn4");
+    Piece blackQueen = pieceHashMap.get("blackQueen");
+    model.movePiece(blackPawn4, new Position(3, 3));
+    model.movePiece(blackQueen, new Position(2, 3));
+    assertEquals("|♜||♞||♝|| ||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟|| ||♟||♟||♟||♟|\n" +
+                    "| || || ||♛|| || || || |\n" +
+                    "| || || ||♟|| || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  public void queenMoveRightTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackPawn4 = pieceHashMap.get("blackPawn4");
+    Piece blackQueen = pieceHashMap.get("blackQueen");
+    model.movePiece(blackPawn4, new Position(3, 3));
+    model.movePiece(blackQueen, new Position(2, 3));
+    model.movePiece(blackQueen, new Position(2, 5));
+    assertEquals("|♜||♞||♝|| ||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟|| ||♟||♟||♟||♟|\n" +
+                    "| || || || || ||♛|| || |\n" +
+                    "| || || ||♟|| || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  public void queenMoveLeftTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackPawn4 = pieceHashMap.get("blackPawn4");
+    Piece blackQueen = pieceHashMap.get("blackQueen");
+    model.movePiece(blackPawn4, new Position(3, 3));
+    model.movePiece(blackQueen, new Position(2, 3));
+    model.movePiece(blackQueen, new Position(2, 0));
+    assertEquals("|♜||♞||♝|| ||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟|| ||♟||♟||♟||♟|\n" +
+                    "|♛|| || || || || || || |\n" +
+                    "| || || ||♟|| || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  public void queenMoveUpTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackPawn4 = pieceHashMap.get("blackPawn4");
+    Piece blackQueen = pieceHashMap.get("blackQueen");
+    model.movePiece(blackPawn4, new Position(3, 3));
+    model.movePiece(blackQueen, new Position(2, 3));
+    model.movePiece(blackQueen, new Position(1, 3));
+    assertEquals("|♜||♞||♝|| ||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟||♛||♟||♟||♟||♟|\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || ||♟|| || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  public void queenMoveDownRightDiagonalTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackPawn4 = pieceHashMap.get("blackPawn4");
+    Piece blackQueen = pieceHashMap.get("blackQueen");
+    model.movePiece(blackPawn4, new Position(3, 3));
+    model.movePiece(blackQueen, new Position(2, 3));
+    model.movePiece(blackQueen, new Position(3, 4));
+    assertEquals("|♜||♞||♝|| ||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟|| ||♟||♟||♟||♟|\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || ||♟||♛|| || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  public void queenMoveDownLeftDiagonalTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackPawn4 = pieceHashMap.get("blackPawn4");
+    Piece blackQueen = pieceHashMap.get("blackQueen");
+    model.movePiece(blackPawn4, new Position(3, 3));
+    model.movePiece(blackQueen, new Position(2, 3));
+    model.movePiece(blackQueen, new Position(3, 2));
+    assertEquals("|♜||♞||♝|| ||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟|| ||♟||♟||♟||♟|\n" +
+                    "| || || || || || || || |\n" +
+                    "| || ||♛||♟|| || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+            model.printBoard());
+  }
+
+  @Test
+  //TODO: FIX THIS
+  public void queenMoveUpRightDiagonalTest() {
+    model.setupChessBoard();
+    HashMap<String, Piece> pieceHashMap = model.getPieceMap();
+    Piece blackPawn4 = pieceHashMap.get("blackPawn4");
+    Piece blackQueen = pieceHashMap.get("blackQueen");
+    model.movePiece(blackPawn4, new Position(3, 3));
+    model.movePiece(blackQueen, new Position(2, 3));
+    System.out.print(model.printBoard());
+    model.movePiece(blackQueen, new Position(4, 5));
+    //model.movePiece(blackQueen, new Position(3, 6));
+    assertEquals("|♜||♞||♝|| ||♚||♝||♞||♜|\n" +
+                    "|♟||♟||♟|| ||♟||♟||♟||♟|\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || ||♟||♛|| || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "| || || || || || || || |\n" +
+                    "|♙||♙||♙||♙||♙||♙||♙||♙|\n" +
+                    "|♖||♘||♗||♕||♔||♗||♘||♖|\n",
+            model.printBoard());
+  }
+
+
+
 }

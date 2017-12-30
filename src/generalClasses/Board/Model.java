@@ -15,6 +15,7 @@ import generalClasses.Pieces.Rook;
 import generalClasses.Pieces.Queen;
 import generalClasses.Pieces.King;
 import generalClasses.Position.Position;
+import javafx.geometry.Pos;
 
 //TODO: TURN THIS INTO THE MODEL
 public class Model implements IBoard {
@@ -86,7 +87,7 @@ public class Model implements IBoard {
     thisBoard[7][2].addPiece(whiteBish1);
     thisBoard[7][5].addPiece(whiteBish2);
 
-    pieceMap.put("blackBish1", blackBish2);
+    pieceMap.put("blackBish1", blackBish1);
     pieceMap.put("blackBish2", blackBish2);
     pieceMap.put("whiteBish1", whiteBish1);
     pieceMap.put("whiteBish2", whiteBish2);
@@ -243,21 +244,48 @@ public class Model implements IBoard {
         }
         break;
       }
-//      case KNIGHT: {
-//        Knight knightPiece = (Knight) pieceToMove;
-//        knightPiece.isValidMove(srcPos, destination);
-//        break;
-//      }
-//      case BISHOP: {
-//        Bishop bishPiece = (Bishop) pieceToMove;
-//        bishPiece.isValidMove(srcPos, destination);
-//        break;
-//      }
-//      case QUEEN: {
-//        Queen queenPiece = (Queen) pieceToMove;
-//        queenPiece.isValidMove(srcPos, destination);
-//        break;
-//      }
+      case KNIGHT: {
+        Knight knightPiece = (Knight) pieceToMove;
+        isValidMove = isValidKnightMove(srcPos, destination);
+        if (isValidMove) {
+          knightPiece.movePiece(destination);
+        } else {
+          throw new IllegalArgumentException("Model: Not a valid Knight move");
+        }
+        break;
+      }
+      case BISHOP: {
+        Bishop bishPiece = (Bishop) pieceToMove;
+        isValidMove = isValidBishopMove(srcPos, destination);
+        isBlocked = isBishopMoveBlocked(srcPos, destination);
+        if (isValidMove) {
+          if (!isBlocked) {
+            bishPiece.movePiece(destination);
+          } else {
+            throw new IllegalArgumentException("Model: There is a piece in the way, preventing " +
+                    "this move");
+          }
+        } else {
+          throw new IllegalArgumentException("Model: Not a valid Bishop move");
+        }
+        break;
+      }
+      case QUEEN: {
+        Queen queenPiece = (Queen) pieceToMove;
+        isValidMove = isValidQueenMove(srcPos, destination);
+        isBlocked = isQueenMoveBlocked(srcPos, destination);
+        if (isValidMove) {
+          if (!isBlocked) {
+            queenPiece.movePiece(destination);
+          } else {
+            throw new IllegalArgumentException("Model: There is a piece in the way, preventing " +
+                    "this move");
+          }
+        } else {
+          throw new IllegalArgumentException("Model: Not a valid Queen move");
+        }
+        break;
+      }
 //      case KING: {
 //        King kingPiece = (King) pieceToMove;
 //        kingPiece.isValidMove(srcPos, destination);
@@ -289,10 +317,6 @@ public class Model implements IBoard {
       destinationTile.addPiece(pieceToMove);
       srcTile.removePiece();
     }
-
-
-
-
   }
 
 
@@ -539,6 +563,131 @@ public class Model implements IBoard {
           }
       }
     }
+    return blockedFlag;
+  }
+
+  private boolean isValidKnightMove(Position start, Position end) {
+    int startX = start.getX();
+    int startY = start.getY();
+    int endX = end.getX();
+    int endY = end.getY();
+
+    if (endX == startX + 2 && endY == startY + 1) {
+      return true;
+    } else if (endX == startX + 2 && endY == startY - 1) {
+      return true;
+    } else if (endX == startX - 2 && endY == startY + 1) {
+      return true;
+    } else if (endX == startX - 2 && endY == startY - 1) {
+      return true;
+    } else if (endX == startX + 1 && endY == startY + 2) {
+      return true;
+    } else if (endX == startX + 1 && endY == startY - 2) {
+      return true;
+    } else if (endX == startX - 1 && endY == startY + 2) {
+      return true;
+    } else if (endX == startX - 1 && endY == startY - 2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  private boolean isValidBishopMove(Position start, Position end) {
+    int startX = start.getX();
+    int startY = start.getY();
+    int endX = end.getX();
+    int endY = end.getY();
+
+    int xDiffAbs = Math.abs(endX - startX);
+    int yDiffAbs = Math.abs(endY - startY);
+
+    return (xDiffAbs == yDiffAbs);
+  }
+
+  private boolean isBishopMoveBlocked(Position start, Position end) {
+    boolean blockedFlag = false;
+    int startX = start.getX();
+    int startY = start.getY();
+    int endX = end.getX();
+    int endY = end.getY();
+
+    int xDiffAbs = Math.abs(endX - startX);
+
+    if (endX > startX && endY > startY) {
+      for (int i = 1; i < xDiffAbs; i ++) {
+        if (Board[startX + i][startY + i].hasPiece()) {
+          blockedFlag = true;
+          break;
+        }
+      }
+    } else if (endX > startX && endY < startY) {
+      for (int i = 1; i < xDiffAbs; i ++) {
+        if (Board[startX + i][startY - i].hasPiece()) {
+          blockedFlag = true;
+          break;
+        }
+      }
+    } else if (endX < startX && endY > startY) {
+      for (int i = 1; i < xDiffAbs; i ++) {
+        if (Board[startX - i][startY + i].hasPiece()) {
+          blockedFlag = true;
+          break;
+        }
+      }
+    } else if (endX < startX && endY < startY) {
+      for (int i = 1; i < xDiffAbs; i ++) {
+        if (Board[startX - i][startY - i].hasPiece()) {
+          blockedFlag = true;
+          break;
+        }
+      }
+    }
+    return blockedFlag;
+  }
+
+  private boolean isValidQueenMove(Position start, Position end) {
+
+    int startX = start.getX();
+    int startY = start.getY();
+    int endX = end.getX();
+    int endY = end.getY();
+
+    int xDiffAbs = Math.abs(endX - startX);
+    int yDiffAbs = Math.abs(endY - startY);
+
+    //This allows the Queen to move Sideways
+    if (end.getX() != start.getX() && end.getY() == start.getY()) {
+      return true;
+    }
+
+    //This allows the Queen to move Forward and Backwards
+    if (end.getY() != start.getY() && end.getX() == start.getX()) {
+      return true;
+    }
+
+    //This allows the Queen to move Diagonally
+    if (xDiffAbs == yDiffAbs) {
+      return true;
+    }
+
+    //This prevents the piece from moving to a random place
+    if (end.getX() != start.getX() && end.getY() != start.getY()) {
+      return false;
+    }
+    return false;
+  }
+
+  private boolean isQueenMoveBlocked(Position start, Position end) {
+    boolean blockedFlag = false;
+    boolean rookStyleMoveBlock = isRookMoveBlocked(start, end);
+    boolean bishopStyleMoveBlock = isBishopMoveBlocked(start, end);
+
+    if (rookStyleMoveBlock || bishopStyleMoveBlock) {
+      blockedFlag = true;
+    }
+    System.out.println("\nRook:" + rookStyleMoveBlock);
+    System.out.println("Bish:" + bishopStyleMoveBlock);
     return blockedFlag;
   }
 }
