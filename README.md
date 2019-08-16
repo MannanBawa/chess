@@ -1,2 +1,2 @@
 # chess
-It's a game of chess. In Java. Prints ths status of the board to console after every move.
+It's a game of chess. In Java. Prints the status of the board to console after every move.
